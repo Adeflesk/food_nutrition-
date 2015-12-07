@@ -25,7 +25,7 @@ class Setup
     return"&sort=n&#{api_boundries(max,offset)}"
   end
 
- 
+
   def api_list_type(type)
     return "list?format=json&lt=#{type}"
   end
@@ -65,7 +65,7 @@ class Setup
 
   def get_food(food,max,offset)
     in_put_file =   open("#{api_host}#{api_search}#{food}#{api_sort(max,offset)}#{api_key}")
-  return  JSON.load(in_put_file)
+    return  JSON.load(in_put_file)
   end
 
 
@@ -87,7 +87,7 @@ class Setup
 
   def get_nutrient_report_food_group(group, nutrients)
       json_list = open("#{api_host}#{api_nutrients}#{api_key}#{api_nutrients_list_builder(nutrients)}#{api_food_group_list_builder(group)}")
-       return JSON.load(json_list)
+      return JSON.load(json_list)
   end
 
   def get_nutrient_report_for_food(food, nutrients)
@@ -102,9 +102,9 @@ setup = Setup.new
 #puts setup.get_list("f","id",25,0)
 #puts "#{setup.api_host}#{setup.api_report_type('01009','b')}#{setup.api_key}" 
 #puts setup.api_nutrients_list_builder(["204","205","208"])
-#puts setup.get_food_report("15017","f")
+puts setup.get_food_report("15017","f")
 #puts "#{setup.api_host}#{setup.api_nutrients}#{setup.api_key}#{setup.api_nutrients_list_builder(["204","205","208"])}"
-#puts setup.get_nutrient_report_all(["204","205","208"])
+puts setup.get_nutrient_report_all(["204","205","208"])
 #puts setup.api_food_group_list_builder(["0100","0500"])
 #puts setup.get_nutrient_report_food_group(["0100","0500"],["204","205","208"])
 #puts setup.get_nutrient_report_for_food("01009",["204","205","208","269"])
