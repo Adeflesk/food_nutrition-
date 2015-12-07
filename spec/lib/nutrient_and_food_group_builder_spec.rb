@@ -7,8 +7,8 @@ describe NutrientAndFoodGroupBuilder do
   it "builds a nutrients list for api requests" do
     list_of_nutrients = ["205","208","363"]
     expected = "&nutrients=205&nutrients=208&nutrients=363"
-   nb = NutrientAndFoodGroupBuilder.new
-   expect(nb.api_nutrients_list_builder(list_of_nutrients)).to eq(expected)
+    nb = NutrientAndFoodGroupBuilder.new
+    expect(nb.api_nutrients_list_builder(list_of_nutrients)).to eq(expected)
   end
 
   it "builds a food group list" do
