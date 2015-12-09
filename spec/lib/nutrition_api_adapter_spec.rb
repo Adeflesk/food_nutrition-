@@ -22,7 +22,7 @@ describe NutritionApiAdapter do
       expect(@na.get_food_list_url("f","n",100,0)).to eq(expected)
     end
 
-    it "build the correct get food report url"do
+    it "builds the correct get food report url"do
       expected ="http://api.nal.usda.gov/ndb/reports/?ndbno=01009&type=b&format=json&api_key=DEMO_KEY"
       expect(@na.get_food_report_url('01009','b')).to eq(expected)
     end

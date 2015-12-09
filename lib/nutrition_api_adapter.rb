@@ -2,6 +2,7 @@ require 'open-uri'
 require 'json'
 require_relative 'setup_params'
 require_relative 'nutrient_and_food_group_builder'
+
 class NutritionApiAdapter
 
   def initialize(setupparams)
@@ -10,7 +11,6 @@ class NutritionApiAdapter
     @api_search = setupparams.api_search
     @builder = NutrientAndFoodGroupBuilder.new
   end
-
 
   def api_list_type(type)
     return "list?format=json&lt=#{type}"
@@ -40,7 +40,6 @@ class NutritionApiAdapter
     return "&ndbno=#{food}"
   end
 
-
   def get_food_url(food, max,offset)
     return "#{@api_host}#{@api_search}#{food}#{api_sort(max,offset)}#{@api_key}"
   end
@@ -65,7 +64,6 @@ class NutritionApiAdapter
     return"#{@api_host}#{api_nutrients}#{@api_key}#{@builder.api_nutrients_list_builder(nutrients)}#{api_food(food)}"
   end
 
-
   def get_food(food,max,offset)
     input_file =  open(get_food_url(food,max,offset))
     return JSON.load(input_file)
@@ -76,29 +74,25 @@ class NutritionApiAdapter
     return JSON.load(input_file)
   end
 
- def get_food_report(ndbno,type)
-    json_list = open(get_food_report_url(ndbno,type))
-    return JSON.load(json_list)
- end
+  def get_food_report(ndbno,type)
+      json_list = open(get_food_report_url(ndbno,type))
+      return JSON.load(json_list)
+  end
 
   def get_nutrient_report_all(nutrients)
     json_list = open(get_nutrient_report_all_url(nutrients))
     return json.load(json_list)
   end
 
-   def get_nutrient_report_food_group(nutrients,group)
-      json_list = open(get_nutrient_report_food_group_url(group,nutrients))
-      return JSON.load(json_list)
-   end
+  def get_nutrient_report_food_group(nutrients,group)
+    json_list = open(get_nutrient_report_food_group_url(group,nutrients))
+    return JSON.load(json_list)
+  end
 
   def get_nutrient_report_for_food(food, nutrients)
        json_list = open(get_nutrient_report_for_food_url(food,nutrients))
        return JSON.load(json_list)
   end
-
-
-
-
 
 end
 
