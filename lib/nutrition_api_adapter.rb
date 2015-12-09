@@ -49,6 +49,23 @@ class NutritionApiAdapter
     return "#{@api_host}#{api_list_type(type)}#{api_list_sort(sort,max,offset)}#{@api_key}"
   end
 
+  def get_food_report_url(ndbno,type)
+    return "#{@api_host}#{api_report_type(ndbno,type)}#{@api_key}"
+  end
+
+  def get_nutrient_report_all_url(nutrients)
+    return "#{@api_host}#{api_nutrients}#{@api_key}#{@builder.api_nutrients_list_builder(nutrients)}"
+  end
+
+  def get_nutrient_report_food_group_url(nutrients,group)
+    return "#{@api_host}#{api_nutrients}#{@api_key}#{@builder.api_nutrients_list_builder(nutrients)}#{@builder.api_food_group_list_builder(group)}"
+  end
+
+  def get_nutrient_report_for_food_url(food,nutrients)
+    return"#{@api_host}#{api_nutrients}#{@api_key}#{@builder.api_nutrients_list_builder(nutrients)}#{api_food(food)}"
+  end
+
+
   def get_food(food,max,offset)
     input_file =  open(get_food_url(food,max,offset))
     return JSON.load(input_file)
@@ -59,9 +76,30 @@ class NutritionApiAdapter
     return JSON.load(input_file)
   end
 
+ def get_food_report(ndbno,type)
+    json_list = open(get_food_report_url(ndbno,type))
+    return JSON.load(json_list)
+ end
+
+  def get_nutrient_report_all(nutrients)
+    json_list = open(get_nutrient_report_all_url(nutrients))
+    return json.load(json_list)
+  end
+
+   def get_nutrient_report_food_group(nutrients,group)
+      json_list = open(get_nutrient_report_food_group_url(group,nutrients))
+      return JSON.load(json_list)
+   end
+
+  def get_nutrient_report_for_food(food, nutrients)
+       json_list = open(get_nutrient_report_for_food_url(food,nutrients))
+       return JSON.load(json_list)
+  end
+
+
+
+
 
 end
 
-na = NutritionApiAdapter.new(SetupParams.new)
 
-puts na.get_food_list("f","n",100,0)
