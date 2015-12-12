@@ -163,5 +163,96 @@ describe NutritionApiPrinter do
      expect(JSON.parse(File.read('data/nutrient_report_all.json'))).to eq(test_json)
 
     end
+
+    it "creates a nutrient food group file" do
+      naa = instance_double("NutritionApiAdapter")
+      test_json =JSON.parse('{
+      "report": {
+        "sr": "28",
+        "groups": [
+          {
+            "id": "0100",
+            "description": "Dairy and Egg Products"
+          },
+          {
+            "id": "0500",
+            "description": "Poultry Products"
+          }
+        ],
+        "subset": "All foods",
+       "foods": [
+          {
+            "ndbno": "43205",
+            "name": "Beverage, instant breakfast powder, chocolate, not reconstituted",
+            "weight": 7.4,
+            "measure": "1.0 tbsp",
+            "nutrients": [
+              {
+                "nutrient_id": "208",
+                "nutrient": "Energy",
+                "unit": "kcal",
+                "value": "26",
+                "gm": 353.0
+              }
+                     ]
+          }
+        ]
+      }
+    }')
+      allow(naa).to receive(:get_nutrient_report_food_group).and_return(test_json)
+      np = NutritionApiPrinter.new(naa)
+      np.get_nutrient_report_food_group(["205","204","208","269"],["0100","0500"])
+     expect(JSON.parse(File.read('data/nutrient_report_food_group.json'))).to eq(test_json)
+    end
+
+   it "creates a nutrient report for food file" do
+      naa = instance_double("NutritionApiAdapter")
+      test_json =JSON.parse('{
+  "report": {
+    "sr": "28",
+    "groups": "All groups",
+    "subset": "All foods",
+    "end": 1,
+    "start": 0,
+    "total": 1,
+    "foods": [
+      {
+        "ndbno": "01009",
+        "name": "Cheese, cheddar",
+        "weight": 132.0,
+        "measure": "1.0 cup, diced",
+        "nutrients": [
+          {
+            "nutrient_id": "208",
+            "nutrient": "Energy",
+            "unit": "kcal",
+            "value": "533",
+            "gm": 404.0
+          },
+          {
+            "nutrient_id": "204",
+            "nutrient": "Total lipid (fat)",
+            "unit": "g",
+            "value": "43.97",
+            "gm": 33.31
+          },
+          {
+            "nutrient_id": "205",
+            "nutrient": "Carbohydrate, by difference",
+            "unit": "g",
+            "value": "4.08",
+            "gm": 3.09
+          }
+        ]
+      }
+    ]
+  }
+}')
+      allow(naa).to receive(:get_nutrient_report_for_food).and_return(test_json)
+      np = NutritionApiPrinter.new(naa)
+      np.get_nutrient_report_for_food("01009",["205","204","208","269"])
+     expect(JSON.parse(File.read('data/nutrient_report_for_food.json'))).to eq(test_json)
+    end
+
   end
 end

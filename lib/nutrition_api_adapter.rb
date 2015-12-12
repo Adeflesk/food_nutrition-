@@ -81,7 +81,7 @@ class NutritionApiAdapter
   end
 
   def get_nutrient_report_food_group(nutrients,group)
-    return get_data(get_nutrient_report_food_group_url(group,nutrients))
+    return get_data(get_nutrient_report_food_group_url(nutrients,group))
   end
 
   def get_nutrient_report_for_food(food, nutrients)

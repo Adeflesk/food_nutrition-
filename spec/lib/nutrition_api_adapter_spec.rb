@@ -33,7 +33,7 @@ describe NutritionApiAdapter do
     end
 
     it "builds the correct nutrient report food group"do
-      expected ="http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=DEMO_KEY&nutrients=205&nutrients=204&nutrients=208&nutrients=269&fg=0100&fg=0500"
+      expected ="http://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=DEMO_KEY&nutrients=105&nutrients=204&nutrients=208&nutrients=269&fg=0100&fg=0500"
       expect(@na.get_nutrient_report_food_group_url(["205","204","208","269"],["0100","0500"])).to eq(expected)
     end
 

@@ -35,10 +35,32 @@ class NutritionApiPrinter
   end
 
 
+  def get_nutrient_report_food_group(nutrients,group)
+    data = @na.get_nutrient_report_food_group(nutrients,group)
+    write_file("data/nutrient_report_food_group.json",data)
+    return data
+  end
+
+  def get_nutrient_report_for_food(food, nutrients)
+    data = @na.get_nutrient_report_for_food(food, nutrients)
+    write_file("data/nutrient_report_for_food.json",data)
+    return data
+  end
+
+
   def write_file(file,data)
   File.open(file,"w")do |f|
         f.write(JSON.pretty_generate(data))
   end
+  end
+
+  def write_all_reports()
+     get_food("Cod",1,0)
+     get_food_list("f","n",2,0)
+     get_food_report('01009','b')
+     get_nutrient_report_all(["205","204","208"])
+     get_nutrient_report_food_group(["205","204","208"],["0100","0500"])
+     get_nutrient_report_for_food('01009',["205","204","208"])
   end
 
 
@@ -48,7 +70,4 @@ naa = NutritionApiAdapter.new(SetupParams.new)
 
 np = NutritionApiPrinter.new(naa)
 
-puts np.get_food("Cwod",1,0)
-np.get_food_list("f","n",2,0)
-np.get_food_report('01009','b')
-np.get_nutrient_report_all(["205","204","208"])
+np.write_all_reports()
