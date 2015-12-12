@@ -113,5 +113,55 @@ describe NutritionApiPrinter do
       np.get_food_report('01009','b')
       expect(JSON.parse(File.read('data/food_report.json'))).to eq(test_json)
     end
+
+    it "creates a full nutrient report"do
+     naa = instance_double("NutritionApiAdapter")
+     test_json =JSON.parse( '{
+                    "report": {
+                      "sr": "28",
+                      "groups": "All groups",
+                      "subset": "All foods",
+                      "end": 150,
+                      "start": 0,
+                      "total": 8490,
+                      "foods": [
+                          {
+                          "ndbno": "09427",
+                          "name": "Abiyuch, raw",
+                          "weight": 114.0,
+                          "measure": "0.5 cup",
+                          "nutrients": [
+                            {
+                              "nutrient_id": "208",
+                              "nutrient": "Energy",
+                              "unit": "kcal",
+                              "value": "79",
+                              "gm": 69.0
+                            },
+                            {
+                              "nutrient_id": "204",
+                              "nutrient": "Total lipid (fat)",
+                              "unit": "g",
+                              "value": "0.11",
+                              "gm": 0.1
+                            },
+                            {
+                              "nutrient_id": "205",
+                              "nutrient": "Carbohydrate, by difference",
+                              "unit": "g",
+                              "value": "20.06",
+                              "gm": 17.6
+                            }
+                          ]
+                          }
+                    ]
+                    }
+                  }')
+     allow(naa).to receive(:get_nutrient_report_all).and_return(test_json)
+     np = NutritionApiPrinter.new(naa)
+     np.get_nutrient_report_all(["205","204","208"])
+     expect(JSON.parse(File.read('data/nutrient_report_all.json'))).to eq(test_json)
+
+    end
   end
 end

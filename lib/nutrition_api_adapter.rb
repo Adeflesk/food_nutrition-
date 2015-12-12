@@ -65,33 +65,36 @@ class NutritionApiAdapter
   end
 
   def get_food(food,max,offset)
-    input_file =  open(get_food_url(food,max,offset))
-    return JSON.load(input_file)
+    return get_data(get_food_url(food,max,offset))
   end
 
   def get_food_list(type,sort,max,offset)
-    input_file = open(get_food_list_url(type,sort,max,offset))
-    return JSON.load(input_file)
+    return get_data(get_food_list_url(type,sort,max,offset))
   end
 
   def get_food_report(ndbno,type)
-      json_list = open(get_food_report_url(ndbno,type))
-      return JSON.load(json_list)
+      return get_data(get_food_report_url(ndbno,type))
   end
 
   def get_nutrient_report_all(nutrients)
-    json_list = open(get_nutrient_report_all_url(nutrients))
-    return json.load(json_list)
+    return get_data(get_nutrient_report_all_url(nutrients))
   end
 
   def get_nutrient_report_food_group(nutrients,group)
-    json_list = open(get_nutrient_report_food_group_url(group,nutrients))
-    return JSON.load(json_list)
+    return get_data(get_nutrient_report_food_group_url(group,nutrients))
   end
 
   def get_nutrient_report_for_food(food, nutrients)
-       json_list = open(get_nutrient_report_for_food_url(food,nutrients))
-       return JSON.load(json_list)
+       return get_data(get_nutrient_report_for_food_url(food,nutrients))
+  end
+
+  def get_data(url)
+    begin
+      input_file = open(url)
+    rescue OpenURI::HTTPError =>ex
+       input_file = [ex.io.status[1],ex.io.status[0]].to_json
+    end
+    return JSON.load(input_file)
   end
 
 end
