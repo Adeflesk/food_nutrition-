@@ -22,6 +22,12 @@ class NutritionApiPrinter
     return data
   end
 
+  def get_food_report(ndbn,type)
+    data = @na.get_food_report(ndbn,type)
+    write_file("data/food_report.json",data)
+    return data
+  end
+
 
   def write_file(file,data)
   File.open(file,"w")do |f|
@@ -38,3 +44,4 @@ np = NutritionApiPrinter.new(naa)
 
 np.get_food("Cod",1,0)
 np.get_food_list("f","n",2,0)
+np.get_food_report('01009','b')

@@ -68,5 +68,50 @@ describe NutritionApiPrinter do
       expect(JSON.parse(File.read('data/food_list.json'))).to eq(test_json)
 
     end
+
+    it "creates food_report " do
+      naa = instance_double("NutritionApiAdapter")
+      test_json = JSON.parse( ' {
+                        "report": {
+                          "sr": "28",
+                          "type": "basic",
+                          "food": {
+                            "ndbno": "01009",
+                            "name": "cheese, cheddar",
+                            "nutrients": [
+                              {
+                                "nutrient_id": "255",
+                                "name": "water",
+                                "group": "proximates",
+                                "unit": "g",
+                                "value": "37.02",
+                                "measures": [
+                                  {
+                                    "label": "cup, diced",
+                                    "eqv": 132.0,
+                                    "qty": 1.0,
+                                    "value": "48.87"
+                                  },
+                                  {
+                                    "label": "cup, melted",
+                                    "eqv": 244.0,
+                                    "qty": 1.0,
+                                    "value": "90.33"
+                                  }
+
+                                ]
+                              }
+                          ]
+                          },
+                          "footnotes": [
+
+                          ]
+  }
+}')
+      allow(naa).to receive(:get_food_report).and_return(test_json)
+      np = NutritionApiPrinter.new(naa)
+      np.get_food_report('01009','b')
+      expect(JSON.parse(File.read('data/food_report.json'))).to eq(test_json)
+    end
   end
 end
