@@ -6,7 +6,7 @@ class SetupParams
   end
 
   def api_key
-    return  @config['development']['dafoodkey']
+    return @config['development']['dafoodkey']
   end
 
   def api_host

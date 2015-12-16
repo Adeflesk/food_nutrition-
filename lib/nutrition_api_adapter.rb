@@ -64,7 +64,7 @@ class NutritionApiAdapter
     return"#{@api_host}#{api_nutrients}#{@api_key}#{@builder.api_nutrients_list_builder(nutrients)}#{api_food(food)}"
   end
 
-  def get_food(food,max,offset)
+  def search_food(food,max,offset)
     return get_data(get_food_url(food,max,offset))
   end
 

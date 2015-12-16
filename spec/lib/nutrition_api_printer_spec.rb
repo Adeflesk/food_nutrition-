@@ -4,17 +4,17 @@ require 'json'
 
 describe NutritionApiPrinter do
 
-  context "Clears folders before creating"do
+  context "Clears folders before creating" do
 
-   it "should clear data directory on init"do
-     naa = instance_double("NutritionApiAdapter")
-     np = NutritionApiPrinter.new(naa)
-     expect(Dir['data/*'].empty?).to be_truthy
-   end
+    it "should clear data directory on init" do
+      naa = instance_double("NutritionApiAdapter")
+      np = NutritionApiPrinter.new(naa)
+      expect(Dir['data/*'].empty?).to be_truthy
+    end
   end
 
-  context "Creates files for each action"do
-    it "should create a search report for a food"do
+  context "Creates files for each action" do
+    it "should create a search report for a food" do
       naa = instance_double("NutritionApiAdapter")
       test_json =JSON.parse('{
                 "list": {
@@ -30,14 +30,14 @@ describe NutritionApiPrinter do
                 }
               }')
 
-      allow(naa).to receive(:get_food).and_return(test_json)
+      allow(naa).to receive(:search_food).and_return(test_json)
       np = NutritionApiPrinter.new(naa)
-      np.get_food("Cod",1,0)
+      np.search_food("Cod", 1, 0)
       expect(Dir['data/*'].empty?).to be_falsey
       expect(JSON.parse(File.read('data/search.json'))).to eq(test_json)
     end
 
-    it "should create a food_list  for a food"do
+    it "should create a food_list  for a food" do
       naa = instance_double("NutritionApiAdapter")
       test_json = JSON.parse('{
                                   "list": {
@@ -64,14 +64,14 @@ describe NutritionApiPrinter do
 
       allow(naa).to receive(:get_food_list).and_return(test_json)
       np = NutritionApiPrinter.new(naa)
-      np.get_food_list("f",'n',2,0)
+      np.get_food_list("f", 'n', 2, 0)
       expect(JSON.parse(File.read('data/food_list.json'))).to eq(test_json)
 
     end
 
     it "creates food_report " do
       naa = instance_double("NutritionApiAdapter")
-      test_json = JSON.parse( ' {
+      test_json = JSON.parse(' {
                         "report": {
                           "sr": "28",
                           "type": "basic",
@@ -110,13 +110,13 @@ describe NutritionApiPrinter do
 }')
       allow(naa).to receive(:get_food_report).and_return(test_json)
       np = NutritionApiPrinter.new(naa)
-      np.get_food_report('01009','b')
+      np.get_food_report('01009', 'b')
       expect(JSON.parse(File.read('data/food_report.json'))).to eq(test_json)
     end
 
-    it "creates a full nutrient report"do
-     naa = instance_double("NutritionApiAdapter")
-     test_json =JSON.parse( '{
+    it "creates a full nutrient report" do
+      naa = instance_double("NutritionApiAdapter")
+      test_json =JSON.parse('{
                     "report": {
                       "sr": "28",
                       "groups": "All groups",
@@ -157,10 +157,10 @@ describe NutritionApiPrinter do
                     ]
                     }
                   }')
-     allow(naa).to receive(:get_nutrient_report_all).and_return(test_json)
-     np = NutritionApiPrinter.new(naa)
-     np.get_nutrient_report_all(["205","204","208"])
-     expect(JSON.parse(File.read('data/nutrient_report_all.json'))).to eq(test_json)
+      allow(naa).to receive(:get_nutrient_report_all).and_return(test_json)
+      np = NutritionApiPrinter.new(naa)
+      np.get_nutrient_report_all(["205", "204", "208"])
+      expect(JSON.parse(File.read('data/nutrient_report_all.json'))).to eq(test_json)
 
     end
 
@@ -201,11 +201,11 @@ describe NutritionApiPrinter do
     }')
       allow(naa).to receive(:get_nutrient_report_food_group).and_return(test_json)
       np = NutritionApiPrinter.new(naa)
-      np.get_nutrient_report_food_group(["205","204","208","269"],["0100","0500"])
-     expect(JSON.parse(File.read('data/nutrient_report_food_group.json'))).to eq(test_json)
+      np.get_nutrient_report_food_group(["205", "204", "208", "269"], ["0100", "0500"])
+      expect(JSON.parse(File.read('data/nutrient_report_food_group.json'))).to eq(test_json)
     end
 
-   it "creates a nutrient report for food file" do
+    it "creates a nutrient report for food file" do
       naa = instance_double("NutritionApiAdapter")
       test_json =JSON.parse('{
   "report": {
@@ -250,8 +250,8 @@ describe NutritionApiPrinter do
 }')
       allow(naa).to receive(:get_nutrient_report_for_food).and_return(test_json)
       np = NutritionApiPrinter.new(naa)
-      np.get_nutrient_report_for_food("01009",["205","204","208","269"])
-     expect(JSON.parse(File.read('data/nutrient_report_for_food.json'))).to eq(test_json)
+      np.get_nutrient_report_for_food("01009", ["205", "204", "208", "269"])
+      expect(JSON.parse(File.read('data/nutrient_report_for_food.json'))).to eq(test_json)
     end
 
   end
