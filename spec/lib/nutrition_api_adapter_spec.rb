@@ -12,9 +12,14 @@ describe NutritionApiAdapter do
       @na = NutritionApiAdapter.new(setupparams)
     end
 
-    it "builds the correct get food url" do
+    it "builds the correct search food url" do
       expected ="http://api.nal.usda.gov/ndb/search/?format=json&q=Cod&sort=n&max=20&offset=0&api_key=DEMO_KEY"
-      expect(@na.get_food_url("Cod", 20, 0)).to eq(expected)
+      expect(@na.search_food_url("Cod", 20, 0)).to eq(expected)
+    end
+
+    it "builds the correct search_food url with food group" do
+       expected ="http://api.nal.usda.gov/ndb/search/?format=json&q=Cod&g=1500&sort=n&max=20&offset=0&api_key=DEMO_KEY"
+       expect(@na.search_food_with_food_group_url("Cod","1500",20,0)).to eq(expected)
     end
 
     it "builds the correct get food list url" do

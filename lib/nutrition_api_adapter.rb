@@ -40,8 +40,16 @@ class NutritionApiAdapter
     return "&ndbno=#{food}"
   end
 
-  def get_food_url(food, max,offset)
+  def api_group(group)
+    return "&g=#{group}"
+  end
+
+  def search_food_url(food, max,offset)
     return "#{@api_host}#{@api_search}#{food}#{api_sort(max,offset)}#{@api_key}"
+  end
+
+  def search_food_with_food_group_url(food,group,max,offset)
+     return "#{@api_host}#{@api_search}#{food}#{api_group(group)}#{api_sort(max,offset)}#{@api_key}"
   end
 
   def get_food_list_url(type,sort,max,offset)
@@ -65,7 +73,11 @@ class NutritionApiAdapter
   end
 
   def search_food(food,max,offset)
-    return get_data(get_food_url(food,max,offset))
+    return get_data(search_food_url(food,max,offset))
+  end
+
+  def search_food_with_food_group(food,group,max,offset)
+    return get_data(search_food_with_food_group_url(food,group,max,offset))
   end
 
   def get_food_list(type,sort,max,offset)
@@ -98,5 +110,6 @@ class NutritionApiAdapter
   end
 
 end
+
 
 

@@ -16,6 +16,12 @@ class NutritionApiPrinter
     return data
   end
 
+  def search_food_with_food_group(food,group,max,offset)
+    data = @na.search_food_with_food_group(food,group,max,offset)
+    write_file("data/food_search_with_food_group.json",data)
+    return data
+  end
+
   def get_food_list(type, sort, max, offset)
     data = @na.get_food_list(type, sort, max, offset)
     write_file("data/food_list.json", data)
@@ -73,6 +79,8 @@ end
 naa = NutritionApiAdapter.new(SetupParams.new)
 
 np = NutritionApiPrinter.new(naa)
+
+puts np.search_food_with_food_group("Cod","1500",1,0)
 
 np.write_all_reports()
 
