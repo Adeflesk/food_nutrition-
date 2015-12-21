@@ -76,11 +76,4 @@ class NutritionApiPrinter
 
 end
 
-naa = NutritionApiAdapter.new(SetupParams.new)
-
-np = NutritionApiPrinter.new(naa)
-
-puts np.search_food_with_food_group("Cod","1500",1,0)
-
-np.write_all_reports()
 
