@@ -4,7 +4,6 @@ require_relative 'lib/food_search'
 require_relative 'lib/food_report'
 require_relative 'lib/nutrition_api_printer'
 
-
 naa = NutritionApiAdapter.new(SetupParams.new)
 #np = NutritionApiPrinter.new(naa)
 puts "Enter in name of food you want to search"
