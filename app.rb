@@ -6,9 +6,16 @@ require_relative 'lib/nutrition_api_printer'
 
 naa = NutritionApiAdapter.new(SetupParams.new)
 #np = NutritionApiPrinter.new(naa)
-puts "Enter in name of food you want to search"
-food = gets.chomp
-fs = FoodSearch.new(naa.search_food(food,100,0))
+puts "Enter in name of food you want to search or exit to close program"
+while(food = gets.chomp) != 'exit'
+found = naa.search_food(food,100,0)
+if found.include?("404")
+  puts "Food not found..Please Enter in a name of food you want to search"
+  next
+else
+  fs = FoodSearch.new(found)
+end
+
 puts fs.total
 fs.items.each { |item| puts "#{item["offset"]} #{item["name"]}" }
 #puts fs.items.each { |item| puts item.values }
@@ -30,3 +37,5 @@ nutrient_name = gets.chomp
 puts fr.get_nutrient_values(nutrient_name)
 #n_hash = fr.nutrients.find {|i| i["name"] == nutrient_name}
 #puts  "#{n_hash["value"]} #{n_hash["unit"]}"
+puts "Enter in name of food you want to search or exit to close program"
+end
