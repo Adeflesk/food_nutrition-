@@ -1,4 +1,5 @@
 class Recipe
+
   def initialize(title)
     @title = title
   end

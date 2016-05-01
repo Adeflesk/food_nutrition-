@@ -2,7 +2,7 @@
 write recipe ingredient holder          <-|
 write recipe add ingredient service ?   <-| could these be one
 
-recipe holds each food report for ingredient
+recipe holds each food report for each ingredient
 recipe is a storage container behaviours will be injected in or outside service
 I will try both approaches and look up to see which one would be better
 or a cleaner pattern
