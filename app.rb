@@ -30,8 +30,10 @@ fr = FoodReport.new(naa.get_food_report(food,'f'))
 #puts fs.get_item_food_group(number.to_i)
 #puts fs.get_item_name(number.to_i)
 puts fr.food_name
-fr.nutrients.each {|nutrient|  puts "--#{nutrient["name"]}--#{nutrient["group"]} #{nutrient["value"]}#{nutrient["unit"]}"}
+fr.nutrients.each {|nutrient| puts "--#{nutrient["name"]}--#{nutrient["group"]} #{nutrient["value"]}#{nutrient["unit"]}"if nutrient["value"] !=0.0}
 puts fr.nutrients.count
+fr.nutrients.each {|nutrient| puts "--#{nutrient["name"]}--#{nutrient["group"]} #{nutrient["value"]}#{nutrient["unit"]}"if nutrient["group"] =="Vitamins"}
+
 puts "Enter in nutrient name to find full details"
 nutrient_name = gets.chomp
 
